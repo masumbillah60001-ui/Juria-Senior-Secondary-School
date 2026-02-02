@@ -11,7 +11,7 @@ type NextFetchRequestConfig = {
     tags?: string[];
 };
 
-const BASE_URL = "/api/v1";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 
 async function fetcher<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
     const { method = "GET", headers = {}, body, ...restOptions } = options;
