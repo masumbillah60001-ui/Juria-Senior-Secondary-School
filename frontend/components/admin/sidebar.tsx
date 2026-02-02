@@ -14,11 +14,11 @@ import { cn } from '@/lib/utils';
 import { signOut } from 'next-auth/react';
 
 const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-    { name: 'Students', href: '/dashboard/students', icon: Users },
-    { name: 'Faculty', href: '/dashboard/faculty', icon: GraduationCap },
-    { name: 'Departments', href: '/dashboard/departments', icon: Building2 },
-    { name: 'Courses', href: '/dashboard/courses', icon: BookOpen },
+    { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Students', href: '/admin/dashboard/students', icon: Users },
+    { name: 'Faculty', href: '/admin/dashboard/faculty', icon: GraduationCap },
+    { name: 'Departments', href: '/admin/dashboard/departments', icon: Building2 },
+    { name: 'Courses', href: '/admin/dashboard/courses', icon: BookOpen },
 ];
 
 export function AdminSidebar() {

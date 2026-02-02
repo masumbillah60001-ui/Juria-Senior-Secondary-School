@@ -91,7 +91,7 @@ export default function StudentTable() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h1 className="text-2xl font-bold text-gray-900">Students</h1>
                 <Link
-                    href="/dashboard/students/create"
+                    href="/admin/dashboard/students/create"
                     className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                 >
                     <Plus className="mr-2 h-4 w-4" />
@@ -246,7 +246,7 @@ export default function StudentTable() {
                                                     <Eye className="h-4 w-4" />
                                                 </button>
                                                 <Link
-                                                    href={`/dashboard/students/${student._id}/edit`}
+                                                    href={`/admin/dashboard/students/${student._id}/edit`}
                                                     className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded transition-colors"
                                                     title="Edit"
                                                 >

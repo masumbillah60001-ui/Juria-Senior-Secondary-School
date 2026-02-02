@@ -52,7 +52,7 @@ export default function FacultyTable() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h1 className="text-2xl font-bold text-gray-900">Faculty Management</h1>
                 <Link
-                    href="/dashboard/faculty/create"
+                    href="/admin/dashboard/faculty/create"
                     className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                 >
                     <Plus className="mr-2 h-4 w-4" />
@@ -144,7 +144,7 @@ export default function FacultyTable() {
                                                     <Eye className="h-4 w-4" />
                                                 </button>
                                                 <Link
-                                                    href={`/dashboard/faculty/${f._id}/edit`}
+                                                    href={`/admin/dashboard/faculty/${f._id}/edit`}
                                                     className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded transition-colors"
                                                     title="Edit"
                                                 >

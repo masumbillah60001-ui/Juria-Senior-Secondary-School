@@ -78,7 +78,7 @@ export default function StudentForm() {
             }
 
             alert('Student created successfully!');
-            router.push('/dashboard/students');
+            router.push('/admin/dashboard/students');
             router.refresh();
 
         } catch (error: any) {
@@ -93,7 +93,7 @@ export default function StudentForm() {
         <div className="max-w-4xl mx-auto">
             <div className="mb-6 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <Link href="/dashboard/students" className="p-2 hover:bg-gray-100 rounded-full transition">
+                    <Link href="/admin/dashboard/students" className="p-2 hover:bg-gray-100 rounded-full transition">
                         <ArrowLeft className="h-5 w-5 text-gray-500" />
                     </Link>
                     <h1 className="text-2xl font-bold text-gray-900">Add New Student</h1>
