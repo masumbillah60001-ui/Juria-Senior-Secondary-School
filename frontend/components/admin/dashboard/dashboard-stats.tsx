@@ -1,4 +1,4 @@
-'use use client';
+'use client';
 
 import { useQuery, useIsFetching } from '@tanstack/react-query';
 import { Users, GraduationCap, BookOpen, Clock, ArrowUp, RefreshCw } from 'lucide-react';
