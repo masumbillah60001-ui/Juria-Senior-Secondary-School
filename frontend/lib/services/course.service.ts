@@ -1,28 +1,65 @@
-import { apiClient } from "@/lib/api-client";
-import { z } from "zod";
-import { CreateCourseSchema } from "@/lib/validators/course";
+import { apiClient } from '@/lib/api-client';
 
-export type Course = z.infer<typeof CreateCourseSchema> & { _id: string };
-export type CreateCourseInput = z.infer<typeof CreateCourseSchema>;
+export interface Course {
+    _id: string;
+    name: string;
+    code: string;
+    department: {
+        _id: string;
+        name: string;
+    } | string;
+    degree: 'Diploma' | 'UG' | 'PG' | 'PhD';
+    duration: number;
+    totalSemesters: number;
+    description?: string;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CreateCourseData {
+    name: string;
+    code: string;
+    department: string; // Department ID
+    degree: 'Diploma' | 'UG' | 'PG' | 'PhD';
+    duration: number;
+    totalSemesters: number;
+    description?: string;
+    isActive?: boolean;
+}
+
+export interface UpdateCourseData extends Partial<CreateCourseData> { }
 
 export const courseService = {
-    getAll: () => {
-        return apiClient.get<Course[]>("/courses");
+    getAll: async (params?: { page?: number; limit?: number; search?: string }) => {
+        const searchParams = new URLSearchParams();
+        if (params?.page) searchParams.append("page", params.page.toString());
+        if (params?.limit) searchParams.append("limit", params.limit.toString());
+        if (params?.search) searchParams.append("search", params.search);
+
+        return apiClient.get<{
+            data: Course[];
+            pagination: {
+                total: number;
+                page: number;
+                totalPages: number;
+            };
+        }>(`/courses?${searchParams.toString()}`);
     },
 
-    getById: (id: string) => {
-        return apiClient.get<Course>(`/courses/${id}`);
+    getById: async (id: string) => {
+        return apiClient.get<{ data: Course }>(`/courses/${id}`);
     },
 
-    create: (data: CreateCourseInput) => {
-        return apiClient.post<Course>("/courses", data);
+    create: async (data: CreateCourseData) => {
+        return apiClient.post<{ data: Course }>('/courses', data);
     },
 
-    update: (id: string, data: Partial<CreateCourseInput>) => {
-        return apiClient.put<Course>(`/courses/${id}`, data);
+    update: async (id: string, data: UpdateCourseData) => {
+        return apiClient.put<{ data: Course }>(`/courses/${id}`, data);
     },
 
-    delete: (id: string) => {
-        return apiClient.delete(`/courses/${id}`);
+    delete: async (id: string) => {
+        return apiClient.delete<{ message: string }>(`/courses/${id}`);
     },
 };

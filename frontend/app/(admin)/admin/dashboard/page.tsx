@@ -1,4 +1,6 @@
 import { auth, signOut } from '@/auth';
+import DashboardStats from '@/components/admin/dashboard/dashboard-stats';
+import ActivityFeed from '@/components/admin/dashboard/activity-feed';
 
 export default async function AdminDashboard() {
     const session = await auth();
@@ -35,20 +37,11 @@ export default async function AdminDashboard() {
                         <p className="mt-1 text-sm text-gray-500">Quick stats and management links.</p>
                     </div>
                     <div className="px-4 py-5 sm:p-6">
-                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                            {/* Placeholders for stats */}
-                            <div className="bg-blue-50 overflow-hidden rounded-lg shadow-sm p-5 border border-blue-100">
-                                <dt className="text-sm font-medium text-blue-500 truncate">Total Students</dt>
-                                <dd className="mt-1 text-3xl font-semibold text-blue-900">--</dd>
-                            </div>
-                            <div className="bg-green-50 overflow-hidden rounded-lg shadow-sm p-5 border border-green-100">
-                                <dt className="text-sm font-medium text-green-500 truncate">Total Faculty</dt>
-                                <dd className="mt-1 text-3xl font-semibold text-green-900">--</dd>
-                            </div>
-                            <div className="bg-purple-50 overflow-hidden rounded-lg shadow-sm p-5 border border-purple-100">
-                                <dt className="text-sm font-medium text-purple-500 truncate">Active Courses</dt>
-                                <dd className="mt-1 text-3xl font-semibold text-purple-900">--</dd>
-                            </div>
+                        <DashboardStats />
+
+                        <div className="mt-8">
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h3>
+                            <ActivityFeed />
                         </div>
                     </div>
                 </div>

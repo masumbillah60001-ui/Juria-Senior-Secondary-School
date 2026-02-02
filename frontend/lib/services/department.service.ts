@@ -1,28 +1,62 @@
-import { apiClient } from "@/lib/api-client";
-import { z } from "zod";
-import { CreateDepartmentSchema } from "@/lib/validators/department";
+import { apiClient } from '@/lib/api-client';
 
-export type Department = z.infer<typeof CreateDepartmentSchema> & { _id: string };
-export type CreateDepartmentInput = z.infer<typeof CreateDepartmentSchema>;
+export interface Department {
+    _id: string;
+    name: string;
+    code: string;
+    description?: string;
+    hod?: {
+        _id: string;
+        firstName: string;
+        lastName: string;
+    } | string;
+    establishedYear?: number;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CreateDepartmentData {
+    name: string;
+    code: string;
+    description?: string;
+    hod?: string;
+    establishedYear?: number;
+    isActive?: boolean;
+}
+
+export interface UpdateDepartmentData extends Partial<CreateDepartmentData> { }
 
 export const departmentService = {
-    getAll: () => {
-        return apiClient.get<Department[]>("/departments");
+    getAll: async (params?: { page?: number; limit?: number; search?: string }) => {
+        const searchParams = new URLSearchParams();
+        if (params?.page) searchParams.append("page", params.page.toString());
+        if (params?.limit) searchParams.append("limit", params.limit.toString());
+        if (params?.search) searchParams.append("search", params.search);
+
+        return apiClient.get<{
+            data: Department[];
+            pagination: {
+                total: number;
+                page: number;
+                totalPages: number;
+            };
+        }>(`/departments?${searchParams.toString()}`);
     },
 
-    getById: (id: string) => {
-        return apiClient.get<Department>(`/departments/${id}`);
+    getById: async (id: string) => {
+        return apiClient.get<{ data: Department }>(`/departments/${id}`);
     },
 
-    create: (data: CreateDepartmentInput) => {
-        return apiClient.post<Department>("/departments", data);
+    create: async (data: CreateDepartmentData) => {
+        return apiClient.post<{ data: Department }>('/departments', data);
     },
 
-    update: (id: string, data: Partial<CreateDepartmentInput>) => {
-        return apiClient.put<Department>(`/departments/${id}`, data);
+    update: async (id: string, data: UpdateDepartmentData) => {
+        return apiClient.put<{ data: Department }>(`/departments/${id}`, data);
     },
 
-    delete: (id: string) => {
-        return apiClient.delete(`/departments/${id}`);
+    delete: async (id: string) => {
+        return apiClient.delete<{ message: string }>(`/departments/${id}`);
     },
 };
