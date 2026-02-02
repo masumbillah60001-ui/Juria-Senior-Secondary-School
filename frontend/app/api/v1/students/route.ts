@@ -67,10 +67,33 @@ export async function POST(req: Request) {
             studentId: data.admissionNumber, // Using admission number as ID for now
             admissionNumber: data.admissionNumber,
             admissionDate: data.admissionDate || new Date(),
-            academicInfo: data.academicInfo,
-            personalInfo: data.personalInfo,
-            hostel: data.hostel,
-            transport: data.transport,
+            course: data.academicInfo.course,
+            department: data.academicInfo.department,
+            semester: data.academicInfo.semester,
+            section: data.academicInfo.section || 'A',
+            batch: data.academicInfo.batch || new Date().getFullYear().toString(),
+            rollNumber: data.academicInfo.rollNumber || data.admissionNumber,
+
+            academicInfo: {
+                previousSchool: data.personalInfo?.previousSchool,
+                marksObtained: data.personalInfo?.previousPercentage,
+                // previousGrade/Board not in validator yet, leave undefined
+            },
+            personalInfo: {
+                fatherName: data.personalInfo?.fatherName || '', // Required in model
+                motherName: data.personalInfo?.motherName || '', // Required in model
+                guardianPhone: data.personalInfo?.guardianPhone || '', // Required in model
+                address: data.address?.city || '', // Fallback using address schema
+                bloodGroup: undefined // Not in validator
+            },
+            hostel: data.hostel ? {
+                roomNumber: data.hostel.roomNumber,
+                block: '' // Not in validator
+            } : undefined,
+            transport: data.transport ? {
+                route: data.transport.routeId,
+                stop: '' // Not in validator
+            } : undefined,
         });
 
         return NextResponse.json({
@@ -94,8 +117,8 @@ export async function GET(req: Request) {
         const departmentId = searchParams.get('departmentId');
 
         const query: any = {};
-        if (courseId) query['academicInfo.course'] = courseId;
-        if (departmentId) query['academicInfo.department'] = departmentId;
+        if (courseId) query['course'] = courseId;
+        if (departmentId) query['department'] = departmentId;
 
         await connectToDatabase();
 
@@ -103,8 +126,8 @@ export async function GET(req: Request) {
 
         const students = await Student.find(query)
             .populate('userId', 'profile email') // Populate user details
-            .populate('academicInfo.course', 'name')
-            .populate('academicInfo.department', 'name')
+            .populate('course', 'name')
+            .populate('department', 'name')
             .skip(skip)
             .limit(limit)
             .sort({ createdAt: -1 });

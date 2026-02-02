@@ -11,6 +11,27 @@ export interface IStudent extends Document {
     section: string;
     batch: string;
     rollNumber: string;
+    academicInfo: {
+        previousSchool?: string;
+        previousGrade?: string;
+        previousBoard?: string;
+        marksObtained?: number;
+    };
+    personalInfo: {
+        fatherName: string;
+        motherName: string;
+        guardianPhone: string;
+        address: string;
+        bloodGroup?: string;
+    };
+    hostel?: {
+        roomNumber: string;
+        block: string;
+    };
+    transport?: {
+        route: string;
+        stop: string;
+    };
     status: 'active' | 'graduated' | 'dropout' | 'transferred';
     createdAt: Date;
     updatedAt: Date;
@@ -66,6 +87,27 @@ const studentSchema = new Schema<IStudent>(
         rollNumber: {
             type: String,
             required: true,
+        },
+        academicInfo: {
+            previousSchool: String,
+            previousGrade: String,
+            previousBoard: String,
+            marksObtained: Number,
+        },
+        personalInfo: {
+            fatherName: { type: String, required: true },
+            motherName: { type: String, required: true },
+            guardianPhone: { type: String, required: true },
+            address: { type: String, required: true },
+            bloodGroup: String,
+        },
+        hostel: {
+            roomNumber: String,
+            block: String,
+        },
+        transport: {
+            route: String,
+            stop: String,
         },
         status: {
             type: String,

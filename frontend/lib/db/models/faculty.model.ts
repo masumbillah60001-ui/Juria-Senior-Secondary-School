@@ -11,6 +11,23 @@ export interface IFaculty extends Document {
         institution: string;
         year: number;
     }>;
+    experience: Array<{
+        title: string;
+        organization: string;
+        startYear: number;
+        endYear?: number;
+    }>;
+    publications: Array<{
+        title: string;
+        journal: string;
+        year: number;
+        link?: string;
+    }>;
+    salary: {
+        basic: number;
+        allowances: number;
+        total: number;
+    };
     specialization: string[];
     status: 'active' | 'on_leave' | 'resigned';
     createdAt: Date;
@@ -51,6 +68,27 @@ const facultySchema = new Schema<IFaculty>(
                 year: Number,
             },
         ],
+        experience: [
+            {
+                title: String,
+                organization: String,
+                startYear: Number,
+                endYear: Number,
+            },
+        ],
+        publications: [
+            {
+                title: String,
+                journal: String,
+                year: Number,
+                link: String,
+            },
+        ],
+        salary: {
+            basic: { type: Number, default: 0 },
+            allowances: { type: Number, default: 0 },
+            total: { type: Number, default: 0 },
+        },
         specialization: [String],
         status: {
             type: String,

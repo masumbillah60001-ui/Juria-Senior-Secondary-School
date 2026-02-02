@@ -27,6 +27,9 @@ The frontend contains your user interface and authentication logic.
 3.  **Project Configuration**:
     *   **Framework Preset**: Next.js
     *   **Root Directory**: `frontend` (You MUST click "Edit" and select the `frontend` folder).
+    *   **Build Command**: `next build` (Default)
+    *   **Output Directory**: `.next` (Default - **Do NOT change to `dist`**)
+    *   **Install Command**: `npm install` (Default)
 4.  **Environment Variables**:
     *   `NEXT_PUBLIC_APP_URL`: `https://your-vercel-project.vercel.app`
     *   `NEXTAUTH_URL`: `https://your-vercel-project.vercel.app`
